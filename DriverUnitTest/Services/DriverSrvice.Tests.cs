@@ -12,14 +12,14 @@ namespace YourProject.Tests
     {
         private Mock<ILogger<DriverService>> loggerMock;
         private Mock<IDriverRepository> driversRepositoryMock;
-        private DriverService driversService;
+        private DriverService driverService;
 
         [TestInitialize]
         public void Initialize()
         {
             loggerMock = new Mock<ILogger<DriverService>>();
             driversRepositoryMock = new Mock<IDriverRepository>();
-            driversService = new DriverService(driversRepositoryMock.Object, loggerMock.Object);
+            driverService = new DriverService(driversRepositoryMock.Object, loggerMock.Object);
         }
 
         [TestMethod]
@@ -36,7 +36,7 @@ namespace YourProject.Tests
             driversRepositoryMock.Setup(repo => repo.Get()).Returns(drivers);
 
             // Act
-            var result = driversService.Get();
+            var result = driverService.Get();
 
             // Assert
             Assert.IsNotNull(result);
@@ -52,7 +52,7 @@ namespace YourProject.Tests
             driversRepositoryMock.Setup(repo => repo.Get()).Returns(drivers);
 
             // Act
-            var result = driversService.Get();
+            var result = driverService.Get();
 
             // Assert
             Assert.IsNotNull(result);
@@ -76,7 +76,7 @@ namespace YourProject.Tests
             driversRepositoryMock.Setup(repo => repo.Get(sampleDriver.Id)).Returns(sampleDriver);
 
             // Act
-            var result = driversService.Get(sampleDriver.Id);
+            var result = driverService.Get(sampleDriver.Id);
 
             // Assert
             Assert.IsNotNull(result);
@@ -92,7 +92,7 @@ namespace YourProject.Tests
             driversRepositoryMock.Setup(repo => repo.Get(invalidDriverId)).Returns((Driver)null);
 
             // Act
-            var result = driversService.Get(invalidDriverId);
+            var result = driverService.Get(invalidDriverId);
 
             // Assert
             Assert.IsNull(result);
@@ -114,7 +114,7 @@ namespace YourProject.Tests
             driversRepositoryMock.Setup(repo => repo.Add(newDriver)).Returns(1);
 
             // Act
-            var result = driversService.Add(newDriver);
+            var result = driverService.Add(newDriver);
 
             // Assert
             Assert.AreEqual(1, result);
@@ -129,7 +129,7 @@ namespace YourProject.Tests
             driversRepositoryMock.Setup(repo => repo.Add(invalidDriver)).Returns(0);
 
             // Act
-            var result = driversService.Add(invalidDriver);
+            var result = driverService.Add(invalidDriver);
 
             // Assert
             Assert.AreEqual(0, result);
@@ -152,7 +152,7 @@ namespace YourProject.Tests
             driversRepositoryMock.Setup(repo => repo.Update(existingDriver)).Returns(1); // Assuming 1 row affected
 
             // Act
-            var result = driversService.Update(existingDriver);
+            var result = driverService.Update(existingDriver);
 
             // Assert
             Assert.AreEqual(1, result);
@@ -167,7 +167,7 @@ namespace YourProject.Tests
             driversRepositoryMock.Setup(repo => repo.Update(invalidDriver)).Returns(0);
 
             // Act
-            var result = driversService.Update(invalidDriver);
+            var result = driverService.Update(invalidDriver);
 
             // Assert
             Assert.AreEqual(0, result);
@@ -182,7 +182,7 @@ namespace YourProject.Tests
             driversRepositoryMock.Setup(repo => repo.Delete(driverIdToDelete)).Returns(1); // Assuming 1 row affected
 
             // Act
-            var result = driversService.Delete(driverIdToDelete);
+            var result = driverService.Delete(driverIdToDelete);
 
             // Assert
             Assert.AreEqual(1, result);
@@ -197,7 +197,7 @@ namespace YourProject.Tests
             driversRepositoryMock.Setup(repo => repo.Delete(invalidDriverId)).Returns(0);
 
             // Act
-            var result = driversService.Delete(invalidDriverId);
+            var result = driverService.Delete(invalidDriverId);
 
             // Assert
             Assert.AreEqual(0, result);
