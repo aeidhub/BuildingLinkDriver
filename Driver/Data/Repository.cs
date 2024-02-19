@@ -6,11 +6,11 @@ using BuildingLinkDriver.Services;
 
 namespace BuildingLinkDriver.Data
 {
-    public class DriverRepository: IDriverRepository
+    public class Repository: IRepository
     {
         private readonly SQLiteConnection _connection;
 
-        public DriverRepository(SQLiteConnection connection)
+        public Repository(SQLiteConnection connection)
         {
             _connection = connection;
         }

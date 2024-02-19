@@ -2,7 +2,7 @@
 
 namespace BuildingLinkDriver.Interfaces
 {
-    public interface IDriverRepository
+    public interface IRepository
     {
         List<Driver> Get();
 

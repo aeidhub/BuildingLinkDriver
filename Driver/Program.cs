@@ -15,7 +15,7 @@ builder.Logging.AddDebug();
 builder.Services.AddLogging();
 
 var connectionString = configuration.GetConnectionString("DefaultConnection");
-builder.Services.AddSingleton<IDriverRepository>(_ => new DriverRepository(new SQLiteConnection(connectionString)));
+builder.Services.AddSingleton<IRepository>(_ => new Repository(new SQLiteConnection(connectionString)));
 builder.Services.AddTransient<IDriverService, DriverService>();
 builder.Services.AddTransient<IOperationService, OperationService>();
 

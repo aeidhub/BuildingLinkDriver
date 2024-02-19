@@ -7,11 +7,11 @@ namespace BuildingLinkDriver.Services
     public class OperationService : IOperationService
     {
         private readonly ILogger<OperationService> _logger;
-        private readonly IDriverRepository _driversRepository;
+        private readonly IRepository _repository;
 
-        public OperationService(IDriverRepository driversRepository, ILogger<OperationService> logger)
+        public OperationService(IRepository repository, ILogger<OperationService> logger)
         {
-            _driversRepository = driversRepository;
+            _repository = repository;
             _logger = logger;
         }
 
@@ -40,7 +40,7 @@ namespace BuildingLinkDriver.Services
                     });
                 }
 
-                _driversRepository.BulkInsert(drivers);
+                _repository.BulkInsert(drivers);
 
                 _logger.LogInformation("Created {driverCount} random drivers.", drivers.Count);
             }
@@ -95,7 +95,7 @@ namespace BuildingLinkDriver.Services
             {
                 List<string> alphabetizedNames = new();
 
-                foreach (Driver driver in _driversRepository.Get())
+                foreach (Driver driver in _repository.Get())
                 {
                     alphabetizedNames.Add(Alphabetize(driver));
                 }

@@ -8,11 +8,11 @@ namespace BuildingLinkDriver.Services
     public class DriverService : IDriverService
     {
         private readonly ILogger<DriverService> _logger;
-        private readonly IDriverRepository _driversRepository;
+        private readonly IRepository _repository;
 
-        public DriverService(IDriverRepository driversRepository, ILogger<DriverService> logger)
+        public DriverService(IRepository repository, ILogger<DriverService> logger)
         {
-            _driversRepository = driversRepository;
+            _repository = repository;
             _logger = logger;
         }
 
@@ -26,7 +26,7 @@ namespace BuildingLinkDriver.Services
             {
                 _logger.LogInformation("Getting all drivers...");
 
-                var drivers = _driversRepository.Get();
+                var drivers = _repository.Get();
 
                 _logger.LogInformation("Got {DriverCount} drivers.", drivers.Count);
 
@@ -50,7 +50,7 @@ namespace BuildingLinkDriver.Services
             {
                 _logger.LogInformation("Getting driver with id {DriverId}...", id);
 
-                var driver = _driversRepository.Get(id);
+                var driver = _repository.Get(id);
 
                 if (driver is null)
                     _logger.LogWarning("Driver with id {DriverId} does not exist.", id);
@@ -77,7 +77,7 @@ namespace BuildingLinkDriver.Services
             {
                 _logger.LogInformation("Adding driver...");
 
-                int affectedRows = _driversRepository.Add(driver);
+                int affectedRows = _repository.Add(driver);
 
                 if (affectedRows > 0)
                     _logger.LogInformation("Added driver successfully.");
@@ -104,7 +104,7 @@ namespace BuildingLinkDriver.Services
             {
                 _logger.LogInformation("Updating driver with id {DriverId}...", driver.Id);
 
-                int affectedRows = _driversRepository.Update(driver);
+                int affectedRows = _repository.Update(driver);
 
                 if (affectedRows > 0)
                     _logger.LogInformation("Updated driver with id {DriverId} successfully.", driver.Id);
@@ -131,7 +131,7 @@ namespace BuildingLinkDriver.Services
             {
                 _logger.LogInformation("Deleting driver with id {DriverId}...", id);
 
-                int affectedRows = _driversRepository.Delete(id);
+                int affectedRows = _repository.Delete(id);
 
                 if (affectedRows > 0)
                     _logger.LogInformation("Deleted driver with id {DriverId} successfully.", id);

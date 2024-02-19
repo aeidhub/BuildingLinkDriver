@@ -5,21 +5,21 @@ using BuildingLinkDriver.Services;
 using Microsoft.Extensions.Logging;
 using Moq;
 
-namespace YourProject.Tests
+namespace DriverUnitTest.Services
 {
     [TestClass]
     public class DriverServiceTests
     {
         private Mock<ILogger<DriverService>> loggerMock;
-        private Mock<IDriverRepository> driversRepositoryMock;
-        private DriverService driverService;
+        private Mock<IRepository> repositoryMock;
+        private IDriverService driverService;
 
         [TestInitialize]
         public void Initialize()
         {
             loggerMock = new Mock<ILogger<DriverService>>();
-            driversRepositoryMock = new Mock<IDriverRepository>();
-            driverService = new DriverService(driversRepositoryMock.Object, loggerMock.Object);
+            repositoryMock = new Mock<IRepository>();
+            driverService = new DriverService(repositoryMock.Object, loggerMock.Object);
         }
 
         [TestMethod]
@@ -33,7 +33,7 @@ namespace YourProject.Tests
                 drivers.Add(new Driver { FirstName = faker.Person.FirstName, LastName = faker.Person.LastName, Email = faker.Person.Email, PhoneNumber = faker.Phone.PhoneNumberFormat() });
             }
 
-            driversRepositoryMock.Setup(repo => repo.Get()).Returns(drivers);
+            repositoryMock.Setup(repo => repo.Get()).Returns(drivers);
 
             // Act
             var result = driverService.Get();
@@ -49,7 +49,7 @@ namespace YourProject.Tests
             // Arrange
             List<Driver> drivers = new();
 
-            driversRepositoryMock.Setup(repo => repo.Get()).Returns(drivers);
+            repositoryMock.Setup(repo => repo.Get()).Returns(drivers);
 
             // Act
             var result = driverService.Get();
@@ -73,7 +73,7 @@ namespace YourProject.Tests
                 PhoneNumber = faker.Phone.PhoneNumberFormat()
             };
 
-            driversRepositoryMock.Setup(repo => repo.Get(sampleDriver.Id)).Returns(sampleDriver);
+            repositoryMock.Setup(repo => repo.Get(sampleDriver.Id)).Returns(sampleDriver);
 
             // Act
             var result = driverService.Get(sampleDriver.Id);
@@ -89,7 +89,7 @@ namespace YourProject.Tests
             // Arrange
             const int invalidDriverId = -1; // Use an invalid driver ID
 
-            driversRepositoryMock.Setup(repo => repo.Get(invalidDriverId)).Returns((Driver)null);
+            repositoryMock.Setup(repo => repo.Get(invalidDriverId)).Returns((Driver)null);
 
             // Act
             var result = driverService.Get(invalidDriverId);
@@ -111,7 +111,7 @@ namespace YourProject.Tests
                 PhoneNumber = faker.Phone.PhoneNumberFormat()
             };
 
-            driversRepositoryMock.Setup(repo => repo.Add(newDriver)).Returns(1);
+            repositoryMock.Setup(repo => repo.Add(newDriver)).Returns(1);
 
             // Act
             var result = driverService.Add(newDriver);
@@ -126,7 +126,7 @@ namespace YourProject.Tests
             // Arrange
             Driver invalidDriver = new();
 
-            driversRepositoryMock.Setup(repo => repo.Add(invalidDriver)).Returns(0);
+            repositoryMock.Setup(repo => repo.Add(invalidDriver)).Returns(0);
 
             // Act
             var result = driverService.Add(invalidDriver);
@@ -149,7 +149,7 @@ namespace YourProject.Tests
                 PhoneNumber = faker.Phone.PhoneNumberFormat()
             };
 
-            driversRepositoryMock.Setup(repo => repo.Update(existingDriver)).Returns(1); // Assuming 1 row affected
+            repositoryMock.Setup(repo => repo.Update(existingDriver)).Returns(1); // Assuming 1 row affected
 
             // Act
             var result = driverService.Update(existingDriver);
@@ -164,7 +164,7 @@ namespace YourProject.Tests
             // Arrange
             Driver invalidDriver = new();
 
-            driversRepositoryMock.Setup(repo => repo.Update(invalidDriver)).Returns(0);
+            repositoryMock.Setup(repo => repo.Update(invalidDriver)).Returns(0);
 
             // Act
             var result = driverService.Update(invalidDriver);
@@ -179,7 +179,7 @@ namespace YourProject.Tests
             // Arrange
             const int driverIdToDelete = 1;
 
-            driversRepositoryMock.Setup(repo => repo.Delete(driverIdToDelete)).Returns(1); // Assuming 1 row affected
+            repositoryMock.Setup(repo => repo.Delete(driverIdToDelete)).Returns(1); // Assuming 1 row affected
 
             // Act
             var result = driverService.Delete(driverIdToDelete);
@@ -194,7 +194,7 @@ namespace YourProject.Tests
             // Arrange
             const int invalidDriverId = -1;
 
-            driversRepositoryMock.Setup(repo => repo.Delete(invalidDriverId)).Returns(0);
+            repositoryMock.Setup(repo => repo.Delete(invalidDriverId)).Returns(0);
 
             // Act
             var result = driverService.Delete(invalidDriverId);
